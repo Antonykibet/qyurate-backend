@@ -4,7 +4,6 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from Products.models import ThemedProduct, Theme, AvailableProducts
 from Products.serializers import ProductSerializer, ThemeSerializer, AvailableItemSerializer
-# Create your views here.
 
 
 class ProductViewSet(viewsets.ModelViewSet):
