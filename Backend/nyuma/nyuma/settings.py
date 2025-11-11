@@ -46,8 +46,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'Products',
     'Orders',
-    'Account',
     'canvas',
+    'business_partner',
+    'accounts',
     'django_filters',
     'corsheaders'
 ]
@@ -87,22 +88,17 @@ WSGI_APPLICATION = 'nyuma.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default':
-#         {'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'personalise',
-#         'USER': 'postgres',
-#         'PASSWORD': 'antony',
-#         'HOST': 'localhost',
-#         'PORT': '5432',}
-#     }
-
 DATABASES = {
-    'default': dj_database_url.config(default='postgresql://antony:SW5doqLree0eGQQKOLtlbiz2GUc86mnD@dpg-cvk2r6h5pdvs73a1m050-a.oregon-postgres.render.com/thoughtfull')
-}
-# DATABASES = {
-#      'default': 'postgresql://antony:SW5doqLree0eGQQKOLtlbiz2GUc86mnD@dpg-cvk2r6h5pdvs73a1m050-a.oregon-postgres.render.com/thoughtfull'
-# }
+    'default':
+        {'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'personalise',
+        'USER': 'postgres',
+        'PASSWORD': 'antony',
+        'HOST': 'localhost',
+        'PORT': '5432',}
+    }
+
+
 # # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
