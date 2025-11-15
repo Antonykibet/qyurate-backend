@@ -21,7 +21,7 @@ from rest_framework import routers
 from django.conf import settings
 from django.conf.urls.static import static
 from Products.views import ProductViewSet,ThemeViewSet,AvailableItemViewSet
-from business_partner.views import ShopViewSet
+from business_partner.views import ShopViewSet, SiteConfigsViewSet
 from canvas.views import StockImageViewSet
 
 router = routers.DefaultRouter()
@@ -30,6 +30,7 @@ router.register(r'theme', ThemeViewSet)
 router.register(r'availableItem', AvailableItemViewSet)
 router.register(r'stockImage', StockImageViewSet)
 router.register(r'businessPartner', ShopViewSet)
+router.register(r'siteConfigs', SiteConfigsViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

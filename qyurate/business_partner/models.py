@@ -2,8 +2,9 @@ from django.db import models
 
 class Shop(models.Model):
     name = models.CharField(max_length=255)
-    # TODO: impose a unique constraint on url
+    # TODO: impose a unique constraint on url and domain
     url = models.URLField(blank=True,null=True)
+    domain = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
