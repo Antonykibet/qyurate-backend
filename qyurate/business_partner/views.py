@@ -2,6 +2,25 @@ from rest_framework import viewsets, response, decorators
 from business_partner.models import Shop, SiteConfigs
 from accounts.serializers import UserSerializer
 from business_partner.serializers import ShopSerializer, SiteConfigsSerializer
+from business_partner.utils import extract_domain
+
+class SiteConfigsViewSet(viewsets.ModelViewSet):
+    queryset = SiteConfigs.objects.all()
+    serializer_class = SiteConfigsSerializer
+
+    @decorators.action(detail=False, methods=['get'])
+    def site_configs(self, request, *args, **kwargs):
+        """
+        Get the shop's site configs
+        """
+        domain = extract_domain(request)
+        site_config = self.queryset.filter(shop__domain=domain).first()
+        if site_config:
+            serialized_data = SiteConfigsSerializer(site_config).data
+            return response.Response({"configs": serialized_data}, status=200)
+        else:
+            return response.Response({"configs": {}}, status=404)
+        
 
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
@@ -17,7 +36,8 @@ class ShopViewSet(viewsets.ModelViewSet):
         owner_details = request.data.get('owner_details',{})
         shop_data = {
             'name': shop_details.get('business_name',''),
-            'url': shop_details.get('url','')
+            'url': shop_details.get('url',''),
+            'domain': shop_details.get('domain','')
         }
         try:
             shop_data = ShopSerializer(data=shop_data)

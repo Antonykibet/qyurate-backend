@@ -31,7 +31,9 @@ SECRET_KEY = 'django-insecure-lm!^m7$svo(k7p-4=0@to1akx=f%!q!sp-59r&^%ow*=#6tt3$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# labrat - postman api client domain
+# labrats.labrat - postman api client sub-domain
+ALLOWED_HOSTS = ['labrats.labrat']
 
 
 # Application definition
