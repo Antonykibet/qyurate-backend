@@ -33,7 +33,7 @@ DEBUG = True
 
 # labrat - postman api client domain
 # labrats.labrat - postman api client sub-domain
-ALLOWED_HOSTS = ['labrats.labrat']
+ALLOWED_HOSTS = ['labrats.labrat','127.0.0.1']
 
 
 # Application definition
@@ -93,9 +93,9 @@ WSGI_APPLICATION = 'nyuma.wsgi.application'
 DATABASES = {
     'default':
         {'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'personalise',
+        'NAME': 'qyurate',
         'USER': 'postgres',
-        'PASSWORD': 'antony',
+        'PASSWORD': os.getenv('DB_PASS'),
         'HOST': 'localhost',
         'PORT': '5432',}
     }
