@@ -35,6 +35,8 @@ DEBUG = True
 # labrats.labrat - postman api client sub-domain
 ALLOWED_HOSTS = ['labrats.labrat','127.0.0.1']
 
+AUTH_USER_MODEL='accounts.QyurateUser'
+
 
 # Application definition
 
@@ -52,18 +54,19 @@ INSTALLED_APPS = [
     'business_partner',
     'accounts',
     'django_filters',
+    'rest_framework_simplejwt',
     'corsheaders'
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # Place this as high as possible
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',  
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'nyuma.urls'
@@ -144,3 +147,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+# email client settings
+SMTP_SERVER = os.getenv('SMTP_SERVER', "smtp.gmail.com")
+SMTP_PORT = 465
+SENDER_EMAIL = os.getenv('SENDER_EMAIL')
+APP_PASSWORD = os.getenv('APP_PASSWORD')

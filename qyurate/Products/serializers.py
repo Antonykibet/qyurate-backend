@@ -1,20 +1,22 @@
-from Products.models import ThemedProduct, Theme, AvailableProducts
+from Products.models import Theme, Product
 from rest_framework import serializers
 
 class ThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
         fields = "__all__" 
-
-class AvailableItemSerializer(serializers.ModelSerializer):
+        
+class BaseProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AvailableProducts
-        fields = "__all__" 
+        model = Product
+        fields = ('id', 'name', 'thumbnail_image_url', 'price')
+
 
 class ProductSerializer(serializers.ModelSerializer):
-    theme = ThemeSerializer()
-    base_product = AvailableItemSerializer()
+    theme_details = ThemeSerializer(read_only=True, source='theme')
+    base_product_details = BaseProductSerializer(read_only=True, source='base_product')
+
     class Meta:
-        model = ThemedProduct
-        fields = "__all__" 
+        model = Product
+        fields = "__all__"
 
