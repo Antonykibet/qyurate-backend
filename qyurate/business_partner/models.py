@@ -1,6 +1,11 @@
 from django.db import models
 from common.constants import NOTIFICATION_METHODS
 
+TIERS = (
+    ('LITE', 'LITE'),
+    ('STORE', 'STORE'),
+)
+
 class Shop(models.Model):
     name = models.CharField(max_length=255)
     # TODO: impose a unique constraint on url and domain
@@ -14,6 +19,7 @@ class Shop(models.Model):
 
 class SiteConfigs(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='site_configs')
+    tier = models.CharField(max_length=50, choices=TIERS, default='LITE')
     logo_url = models.URLField(blank=True, null=True)
     color_palette = models.CharField(max_length=7, default="#FF6A07")  # Hex color code
     hero_image_url = models.URLField(blank=True, null=True)
