@@ -28,7 +28,7 @@ from Products.views import ProductViewSet,ThemeViewSet
 from business_partner.views import ShopViewSet, SiteConfigsViewSet
 from Orders.views import OrderViewSet
 from canvas.views import StockImageViewSet
-from accounts.views import UserViewSet
+from accounts.views import UserViewSet, CustomTokenObtainPairView
 
 router = routers.DefaultRouter()
 router.register(r'theme', ThemeViewSet)
@@ -42,7 +42,7 @@ router.register(r'user', UserViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     path('api/', include(router.urls)),

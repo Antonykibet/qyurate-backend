@@ -1,10 +1,10 @@
 # views.py
-
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from accounts.models import QyurateUser
-from accounts.serializers import UserSerializer
+from accounts.serializers import UserSerializer, CustomTokenObtainPairSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = QyurateUser.objects.all()
@@ -21,3 +21,6 @@ class UserViewSet(viewsets.ModelViewSet):
         user_serializer.is_valid(raise_exception=True)
         user_serializer.save()
         return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+    
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
