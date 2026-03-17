@@ -13,14 +13,16 @@ class SiteConfigsViewSet(viewsets.ModelViewSet):
         """
         Get the shop's site configs
         """
-        domain = extract_domain(request)
-        site_config = self.queryset.filter(shop__domain=domain).first()
-        if site_config:
-            serialized_data = SiteConfigsSerializer(site_config).data
-            return response.Response({"configs": serialized_data}, status=200)
-        else:
-            return response.Response({"configs": {}}, status=404)
-        
+        try:
+            domain = extract_domain(request)
+            site_config = self.queryset.filter(shop__domain=domain).first()
+            if site_config:
+                serialized_data = SiteConfigsSerializer(site_config).data
+                return response.Response({"data": serialized_data}, status=200)
+            else:
+                return response.Response({"error": "Site configurations not found"}, status=404)
+        except Exception:
+            return response.Response({"error": "An error occurred while fetching site configurations"}, status=500)
 
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
