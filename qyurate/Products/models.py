@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -12,6 +13,7 @@ class Theme(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=200,null=True,)
+    slug = models.SlugField(max_length=250, blank=True)
     thumbnail_image_url = models.ImageField(upload_to='products/', null=True, blank=True)
     base_image_url = models.ImageField(upload_to='products/', null=True, blank=True)
     price = models.IntegerField(null=True)
@@ -38,6 +40,14 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         self.populate_is_template()
+        if not self.slug and self.name:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
+            while Product.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         super().save(*args, **kwargs)
 
     def __str__(self):

@@ -8,7 +8,7 @@ def extract_domain(request):
     if len(deconstructed_domain) == 2:
         subdomain = deconstructed_domain[0]
         return subdomain
-    return domain   
+    return domain
 
 def get_shop(request):
     domain = extract_domain(request)

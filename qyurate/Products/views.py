@@ -17,6 +17,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     """Handles both regular products and templates. Use `is_template` filter to select templates."""
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    lookup_field = 'slug'
     filter_backends = [filters.SearchFilter,DjangoFilterBackend]
     search_fields = ['name','description']
     filterset_fields = ['is_template', 'theme__type', 'theme__name', 'base_product__name']
