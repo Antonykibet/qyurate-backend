@@ -13,4 +13,8 @@ def extract_domain(request):
 def get_shop(request):
     domain = extract_domain(request)
     shop = Shop.objects.filter(domain=domain).first()
-    return shop
+    if shop:
+        return shop
+    # revert to "admin shop"
+    # TODO: Fix this bs tho
+    return Shop.objects.filter(domain='mirror_moodz').first()

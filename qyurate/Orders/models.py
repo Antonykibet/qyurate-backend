@@ -13,6 +13,7 @@ class Order(models.Model):
     customer_email = models.EmailField(null=True)
     customer_phone_no = models.CharField(max_length=20,null=True)
     address = models.TextField(null=True)
+    extra_info = models.TextField(null=True, blank=True)
     status = models.CharField(choices=ORDER_STATUS, max_length=50, default='PENDING')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

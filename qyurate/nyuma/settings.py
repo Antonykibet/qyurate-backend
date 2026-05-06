@@ -158,8 +158,8 @@ REST_FRAMEWORK = {
 # email client settings
 SMTP_SERVER = os.getenv('SMTP_SERVER', "smtp.gmail.com")
 SMTP_PORT = 465
-SENDER_EMAIL = os.getenv('SENDER_EMAIL')
+ADMIN_EMAIL = os.getenv('SENDER_EMAIL')
 APP_PASSWORD = os.getenv('APP_PASSWORD')
 
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') 
