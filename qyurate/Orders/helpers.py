@@ -12,20 +12,17 @@ def prepare_order_notification(order, shop):
     
     :param order: Description
     """
-    try:
-        data = {}
-        site_config = SiteConfigs.objects.filter(shop=shop).first()
-        data['order'] = order
-        data['notification_method'] = site_config.notification_method
-        if site_config.notification_method == 'EMAIL':
-            data['contact_info'] = site_config.email
-        if site_config.notification_method == 'WOZZAP':
-            data['contact_info'] = site_config.phone_contact
-        data['message'] = f"New order received!\nOrder code: {order.code}\nCustomer: {order.customer_name}\nTotal Price: {order.total_price()}\nStatus: {order.status}"
+    data = {}
+    site_config = SiteConfigs.objects.filter(shop=shop).first()
+    data['order'] = order
+    data['notification_method'] = site_config.notification_method
+    if site_config.notification_method == 'EMAIL':
+        data['contact_info'] = site_config.shop.email
+    if site_config.notification_method == 'WOZZAP':
+        data['contact_info'] = site_config.shop.phone_contact
+    data['message'] = f"New order received!\nOrder code: {order.code}\nCustomer: {order.customer_name}\nTotal Price: {order.total_price()}\nStatus: {order.status}"
 
-        OrderNotificationLog.objects.create(**data)
-    except Exception:
-        LOGGER.error('Failed to prepare order notification',order.guid, exc_info=True)
+    OrderNotificationLog.objects.create(**data)
         
 def send_order_notification_via_wozzap(notification, to):
     pass
@@ -44,7 +41,7 @@ def send_order_notification_via_email(notification, to):
 
     send_email(subject, body, to, html=True, html_body=html_body)
 
-def send_order_notification(order, contact):
+def send_order_notification(order):
     try:
         notification = OrderNotificationLog.objects.filter(order=order, status__in=['PENDING', 'FAILED']).first()
         if not notification:
@@ -52,9 +49,9 @@ def send_order_notification(order, contact):
             return
         
         if notification.notification_method == 'WOZZAP':
-            send_order_notification_via_wozzap(notification, contact)
+            send_order_notification_via_wozzap(notification, notification.contact_info)
         else:
-            send_order_notification_via_email(notification, contact)
+            send_order_notification_via_email(notification, notification.contact_info)
 
         notification.status = 'SUCCESS'
         notification.save()
@@ -63,7 +60,7 @@ def send_order_notification(order, contact):
         notification.status = 'FAILED'
         notification.error_message = str(e)
         notification.save()
-        LOGGER.error('Failed to send order notification', order.guid, exc_info=True)
+        raise('Failed to send order notification', order.guid)
 
 def generate_order_code():
     import random

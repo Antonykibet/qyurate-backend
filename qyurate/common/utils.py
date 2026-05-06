@@ -10,7 +10,7 @@ LOGGER = logging.getLogger(__name__)
 
 SMTP_SERVER = settings.SMTP_SERVER
 PORT = settings.SMTP_PORT
-SENDER_EMAIL = settings.SENDER_EMAIL
+SENDER_EMAIL = settings.ADMIN_EMAIL
 APP_PASSWORD = settings.APP_PASSWORD
 
 def send_email(subject, body, to, html=False, html_body=None):
