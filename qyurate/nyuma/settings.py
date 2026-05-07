@@ -33,7 +33,7 @@ DEBUG = True
 
 # labrat - postman api client domain
 # labrats.labrat - postman api client sub-domain
-ALLOWED_HOSTS = ['labrats.labrat','127.0.0.1']
+ALLOWED_HOSTS = ['labrats.labrat','127.0.0.1', 'api.qyurate.com']
 
 AUTH_USER_MODEL='accounts.QyurateUser'
 
